@@ -13,4 +13,5 @@ insert into member values(
 )
 drop table member;
 
-
+<!-- SID 구하기 -->
+select name from v$database;

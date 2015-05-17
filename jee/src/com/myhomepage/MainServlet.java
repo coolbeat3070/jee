@@ -28,7 +28,8 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view = request.getRequestDispatcher("now.jsp");
+		System.out.println("들어는 왔다");
+		RequestDispatcher view = request.getRequestDispatcher("/now.jsp");
 		view.forward(request, response);
 	}
 
