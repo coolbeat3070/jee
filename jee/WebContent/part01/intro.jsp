@@ -54,9 +54,6 @@
 				<a href="part01/add_demo2.do">예제 : 모델1방식(JSP버전)</a><br />
 				<a href="part01/add_demo3.do">예제 : 모델2방식(향상된 서블릿방식)</a>
 			</li>
-			<li></li>
-			<li></li>
-			<li></li>
 		</ul>
 	</div>
 	
