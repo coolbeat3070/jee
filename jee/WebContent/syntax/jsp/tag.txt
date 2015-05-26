@@ -1,0 +1,6 @@
+tag 는 총 4가지
+
+	html tag
+	jsp tag
+	el tag
+	jstl tag : jstl.jar, standard.jar 필수

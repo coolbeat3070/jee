@@ -1,0 +1,132 @@
+***Join(조인)
+
+--SQL문에서 사용하는 컬럼이 두 개 이상의 테이블에 존재하는 경우 사용되는 고급 쿼리기법
+
+
+
+--종류
+
+1. Eque join(inner join) : 조건절에 만족하는 데이터(행)만*** 추출
+
+2. Outer join(left & right) : 조건절에 만족하는 데이터가 추출되고, 마스터 테이블 데이터는 모두 추출
+
+3. Cross join(카티션 프로덕트=데카르트의 곱) : 테이블간의 관계가 없으므로 조건식 없는 경우(table*table)
+
+-------------------
+
+4. Self join : 물리적은 하나의 테이블이 자기 자신과 조인되는 경우
+
+
+
+--문법
+
+1. Ansi Join : 서술형(from), on 조건절
+
+* 관계되는 컬럼명이 같은 경우 사용되는 조인(별칭불가!, 조건식불가!)
+
+-natural join
+
+select saname, deptno, dname from sawon natural join dept;
+
+
+
+-using join
+
+select saname, deptno, dname from sawon join dept using(deptno);
+
+
+
+2. T-SQL Join : 나열형(from), where 조건절
+
+1) select~ : 사용할 컬럼 list
+
+2) from~   : 사용된 컬럼을 가진 테이블 list
+
+3) where~ : 사용된 테이블 간의 관계(PK<-FK)를 표현식(테이블수-1)
+
+
+
+--사원명, 부서번호, 부서명을 추출
+
+select s.saname, s.deptno, d.dname 
+from sawon s, dept d
+where s.deptno=d.deptno;
+
+select s.saname, s.deptno, d.dname 
+from sawon s join dept d
+on(s.deptno=d.deptno);
+
+
+
+--고객명, 담당자번호, 담당자명을 추출(단, 담당자가 없는 고객도 추출)
+
+select g.goname, g.godam, s.saname from sawon s, gogek g
+
+where s.sabun(+) = g.godam;  // right outer join
+
+
+
+select g.goname, g.godam, s.saname from sawon s right outer join gogek g
+
+on(s.sabun = g.godam);
+
+
+
+--사원명, 관리자번호, 관리자명을 추출
+
+select s.saname, s.samgr, m.saname from sawon s, sawon m
+
+where s.samgr = m.sabun(+);
+
+
+
+--부서(명)별 급여합계를 추출
+
+select d.name, sum(s.sapay) "급여합계" from dept d, sawon s
+
+where d.deptno=s.deptno
+
+group by d.dname;
+
+
+
+--부서명, 사원명, 직책, 관리자명, 관리자직책을 추출(단, 관리자가 없는 사원도 추출)
+
+select d.dname, s.saname, s.sajob, m.saname, m.sajob
+
+from dept d, sawon s, sawon m
+
+where d.deptno(+)=s.deptno
+
+and s.samgr=m.sabun(+);
+
+
+
+--고객명, 전화번호, 담당자명, 담당자부서명, 담당자직책을 추출(단, 담당자가 없는 고객도 추출)
+
+select g.goname 고객명, g.gotel 전화번호, s.saname 담당자명, d.dname 담당자부서명, s.sajob 담당자직책
+
+from gogek g, sawon s, dept d
+
+where g.godam=s.sabun(+) and s.deptno=d.deptno(+);
+
+
+
+select g.goname 고객명, g.gotel 전화번호, s.saname 담당자명, d.dname 담당자부서명, s.sajob 담당자직책
+
+from gogek g left outer join sawon s on(g.godam=s.sabun)
+
+     left outer join dept d on(s.deptno=d.deptno);
+
+
+
+--고객명, 담당자번호, 담당사원명을 추출(단, full outer join하라)
+
+select g.goname, g.godam, s.saname from sawon s full outer join gogek g
+
+on(s.sabun = g.godam);
+
+
+   and s.sapay < t.sapay;
+
+[출처] [DB_oracle]오라클교육6일차|작성자 유글

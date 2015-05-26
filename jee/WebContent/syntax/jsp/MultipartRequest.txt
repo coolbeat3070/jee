@@ -1,0 +1,12 @@
+com.oreilly.servlet
+
+MultipartRequest multi = new MultipartRequest(1,2,3,4,5);
+
+1. request
+2. 경로
+3. 사이즈
+4. enctype
+5. 중복여부에 DefaultFileRenamePolicy 클래스 사용
+
+일반 데이터는 multi.getParameter("sabun");
+파일 데이터는 multi.getFilesystemName("file_good");

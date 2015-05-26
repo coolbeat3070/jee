@@ -1,0 +1,203 @@
+오늘 배운 개념---
+
+
+
+*trigger 객체 구현 : 제약조건으로 구현할 수 없는 상황에서 사용되는 것
+
+
+
+[2]문법
+
+
+
+
+
+1.column level : column 정의와 함께
+
+-create table [table] ([column type(length),...] contraint [contraint] primary key, ...);
+
+  ex)create table ex(id number(3) contraint table_sal_제약, ...);
+
+  -제약명을 주지 않을 경우 오라클 서버에서 자동으로 생성한다. 그러나 자동 생성을 할 경우 나중에 변경과 삭제에서 찾기 어렵다.
+
+-not null은 column level에서만 사용한다.
+
+
+
+2.table level : column 추가하듯이
+
+-create table [table] ([column type(length), ...] contraint [contraint] primary key([primary key]))
+
+  ex)create table ex(id number(3),..., contraint ex_id_pk primary key(id));
+
+-생성시 두 개 이상의 제약 설정
+
+-복합컬럼제약 : 두 개 이상의 column에 한 제약조건이 걸림
+
+  ex)여러 column을 결합해서 기본키를 할 경우
+
+
+
+[3]제약조건(문법)-예제
+
+
+
+1. column level
+
+-학생테이블
+
+create table st(stno number(3) constraint st_stno_pk primary key,
+
+  sname varchar2(10) constraint st_sname_nn not null,
+
+  jumin char(14) constraint st_jumin_uq unique,
+
+  address varchar2(30) default '서울시 노원구',
+
+  age number(3) constrain st_agr_ck check(age>=20 and age <= 30));
+
+
+
+-도서관 테이블
+
+create table lib(hakbun number(3) constraint lib_hakbun_fk referneces st(stno) [on delete cascade],
+
+  book_name varchar2(30) constraint lib_bname_nn not null,
+
+  loan_date date default sysdate);
+
+
+
+*not null변경
+
+alter table st modify jumin char(14) [constraint st_jumin_uq not null|null]
+
+
+
+*그 외의 제약 변경
+
+alter table st add constraint st_jumin_uq unique(jumin);  //제약 추가
+
+  drop constraint st_jumin_uq;   //제약 삭제
+
+
+
+2.table level
+
+
+
+create table st(stno number(3),
+
+  sname varchar2(10) constraint st_sname_nn not null,
+
+  jumin char(14),
+
+  address varchar2(30) default '서울시 노원구',
+
+  age number(3),
+
+  constraint st_stno_pk primary key(stno),
+
+  constraint st_jumin_uq unique(jumin),
+
+  constraint st_agr_ck check(age>=20 and age <= 30));
+
+
+
+create table lib(hakbun number(3),
+
+  book_name varchar2(30) constraint lib_bname_nn not null,
+
+  loan_date date default sysdate,
+
+  constraint lib_hakbun_fk foreign key(hakbun) reference st(stno));
+
+
+
+
+
+4)
+
+1.create user [이름 이니셜] identified by [pass] (default tablespace users);
+
+-create user [user] identified by [password]  //패스워드(생략불가)
+
+       default tablespace system;  //기본 사용 공간 할당(원래는 생략되어 자동으로 system으로 간다.)
+
+  :
+
+2.grant connect,resource to [이름 이니셜];
+
+
+
+*일반계정-privilege[권한]-role[권한을 모아두는 것](connect/resource)
+
+
+
+
+---테이블 생성
+
+
+create table dept(deptno number(3),
+
+    dname varchar2(10),
+
+    loc varchar2(10),
+
+       constraint dept_deptno_pk primary key(deptno),
+
+    constraint dept_dname_uq unique(dname));
+
+
+
+
+create table sawon(sabun number(3),
+
+     saname varchar2(10) constraint sawon_saname_nn not null,
+
+     deptno number(3),
+
+     sajob varchar2(10),
+
+     sapay number(10),
+
+     sahire date default sysdate,
+
+     sasex varchar2(4),
+
+     samgr number(3),
+
+     constraint sawon_sabun_pk primary key(sabun),
+
+     constraint sawon_deptno_fk foreign key(deptno) references dept(deptno),
+
+     constraint sawon_sasex_ck check(sasex='남자' or sasex = '여자'),
+
+     constraint sawon_samgr_fk foreign key(samgr) references sawon(sabun));
+
+
+
+
+create table gogek(gobun number(3),
+
+     goname varchar2(10),
+
+     gotel varchar2(14),
+
+     gojumin varchar2(14),
+
+     godam number(3),
+
+     constraint gogek_gobun_pk primary key(gobun),
+
+     constraint gogek_gojumin_uq unique(gojumin),
+
+     constraint gogek_godam_fk foreign key(godam) references sawon(sabun));
+
+
+
+
+[DB_oracle]오라클교육3일차
+
+
+[출처] [DB_oracle]오라클교육3일차|작성자 유글

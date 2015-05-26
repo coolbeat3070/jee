@@ -1,0 +1,20 @@
+-- db name 조회
+select name, db_unique_name from v$database;
+-- SID	조회
+select instance from v$thread;
+-- 전체 table 조회
+select * from tab;
+-- table 구조 조회
+desc TABLE ;
+-- 스키마 접속
+conn HR/HR ;
+-- 스키마 조회
+show user;
+-- oracle 접속
+sqlplus SYSTEM/ORACLE
+-- 관리자 권한 접속
+conn /as sysdba;
+-- 사용자 생성
+create user MY identified by DBA;
+-- 사용자 변경
+alter user HR identified by DBA;

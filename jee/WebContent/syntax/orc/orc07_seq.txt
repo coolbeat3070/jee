@@ -1,0 +1,13 @@
+create sequence guestreply_seq;
+
+create table guestreply(
+     num number(4) primary key,
+     writer varchar2(20) not null,
+     content varchar2(20) not null,
+     sabun number(4) 
+);
+
+
+insert into guestreply values(
+     guestreply_seq.nextVal,'madman','german',6033
+);

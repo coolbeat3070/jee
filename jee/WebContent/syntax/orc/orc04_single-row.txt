@@ -1,0 +1,491 @@
+*** 단일행 함수
+
+
+
+1. 수학함수
+
+
+
+SQL> select sin(10), cos(10), tan(10), log(10,2), power(4,5) from dual;
+
+
+
+   SIN(10)    COS(10)    TAN(10)  LOG(10,2) POWER(4,5)
+
+---------- ---------- ---------- ---------- ----------
+
+-.54402111 -.83907153 .648360827 .301029996       1024
+
+
+
+--반올림 관련 함수***
+
+SQL> select round(456.5678, 2), round(456.5678, -2), round(456.5678, 0) from dual;
+
+
+
+ROUND(456.5678,2) ROUND(456.5678,-2) ROUND(456.5678,0)
+
+----------------- ------------------ -----------------
+
+           456.57                500               457
+
+
+
+SQL> select trunc(456.5678, 2), trunc(456.5678, -2), trunc(456.5678, 0) from dual;
+
+
+
+TRUNC(456.5678,2) TRUNC(456.5678,-2) TRUNC(456.5678,0)
+
+----------------- ------------------ -----------------
+
+           456.56                400               456
+
+
+
+SQL> select floor(10.99), ceil(10.1) from dual;
+
+
+
+FLOOR(10.99) CEIL(10.1)
+
+------------ ----------
+
+          10         11
+
+
+
+SQL> select floor(-10.99), ceil(-10.1) from dual;
+
+
+
+FLOOR(-10.99) CEIL(-10.1)
+
+------------- -----------
+
+          -11         -10
+
+
+
+--사원명, 급여, 월급(급여/12), 세금(급여의 3.3%)를 추출
+
+--단, 월급은 십단위에서 반올림하고, 세금은 일단위 절삭하여 추출
+
+select saname, sapay, round(sapay/12, -2) "월급", trunc(sapay*0.033, -1) "세금" from sawon;
+
+
+
+2. 문자열 함수
+
+
+
+SQL> select lower('SeoulWomenUniv'), upper('SeoulWomenUniv'), initcap('i am SeoulWomenUniv') from dual;
+
+
+
+LOWER('SEOULWO UPPER('SEOULWO INITCAP('IAMSEOULWO
+
+-------------- -------------- -------------------
+
+seoulwomenuniv SEOULWOMENUNIV I Am Seoulwomenuniv
+
+
+
+SQL> select length('SeoulWomenUniv'), lengthb('서울여대') from dual;
+
+
+
+LENGTH('SEOULWOMENUNIV') LENGTHB('서울여대')
+
+------------------------ -------------------
+
+                      14                   8
+
+
+
+--채우기 함수*** lpad & rpad(데이터,전체크기,'채울문자')
+
+SQL> select lpad(saname, 20, '#') from sawon;
+
+
+
+LPAD(SANAME,20,'#')
+
+----------------------------------------
+
+##############홍길동
+
+##############한국남
+
+##############이순신
+
+##############이순라
+
+##############놀기만
+
+
+
+
+
+--사원명, 급여, 급여현황(급여 100의 '*'하나)을 추출
+
+col 급여현황 format a55
+
+
+
+홍길동 1500 ***************
+
+홍동우 1000 **********
+
+
+
+select saname, sapay, lpad('*',sapay/100,'*') 급여현황 from sawon;
+
+
+
+--문자열 추출함수*** substr(문자열,N번째, N개)
+
+SQL> select substr('SeoulWomenUniv', 3, 4) from dual;
+
+
+
+SUBS
+
+----
+
+oulW
+
+
+
+--고객명, 주민번호1(******-3182518), 주민번호2(041201-*******)를 추출
+
+select goname, lpad(substr(gojumin,7,8),14,'*') 주민번호1, rpad(substr(gojumin,1,7),14,'*') 주민번호2 from gogek;
+
+
+
+--대체 함수
+
+SQL> select replace('seoulwomenuniv','seoul','sukmyung') from dual;
+
+
+
+REPLACE('SEOULWOM
+
+-----------------
+
+sukmyungwomenuniv
+
+
+
+--공백 문자 제거 함수
+
+SQL> select trim('  seoul  women  univ  '), ltrim('  seoul  women  univ  '), rtrim('  seoul  women  univ  ') from dual;
+
+
+
+TRIM('SEOULWOMENUN LTRIM('SEOULWOMENUNI RTRIM('SEOULWOMENUNI
+
+------------------ -------------------- --------------------
+
+seoul  women  univ seoul  women  univ     seoul  women  univ
+
+
+
+SQL> select trim('s' from 'sssseoulss') from dual;
+
+
+
+TRIM
+
+----
+
+eoul
+
+
+
+3. 조건함수
+
+-decode(기준값, 조건1, 결과1, 조건2, 결과2,...,그외의 결과) "컬럼명"
+
+-case [기준값] when 조건1 then 결과1 when 조건2 then 결과2 ..... else 그외의 결과 end "컬럼명"
+
+       ---------
+
+     범위조건인 경우 생략!
+
+
+
+select saname, deptno, decode(deptno,10,'영업',20,'관리',30,'전산','총무') 부서명 from sawon;
+
+
+
+select saname, deptno,
+
+case deptno when 10 then '영업' when 20 then '관리' when 30 then '전산' else '총무' end "부서명 from sawon;
+
+
+
+--고객명, 주민번호, 성별을 추출(decode)
+
+select goname, gojumin, decode(substr(gojumin,8,1),1,'남자',3,'남자','여자') "성별"
+
+
+
+--사원명, 급여, 보너스를 추출(case)
+
+--단, 보너스는 급여가 1000미만  -> 급여의 10%
+
+       1000~2000-> 급여의 15%
+
+         2000초과  -> 급여의 20%
+
+       null       -> 0
+
+col 보너스 format a10
+
+select saname, sapay, case  when sapay<1000 then sapay*0.1
+
+   when sapay<=2000 then sapay*0.15
+
+   when sapay>2000 then sapay*0.2
+
+   else 0 end "보너스"
+
+from sawon;
+
+
+
+4. 변환 함수
+
+
+
+-to_char(날짜 또는 숫자, '형식') : 날짜 또는 숫자를 지정한 형식의 문자(열)로 변환
+
+-to_date('날짜형태의 문자열','형식') : 날짜형태의 문자열을 지정한 형식의 날짜로 변환(시간표현)
+
+
+
+--날짜 관련 형식
+
+SQL>  select sysdate, to_char(sysdate,'year') from dual;
+
+
+
+SYSDATE  TO_CHAR(SYSDATE,'YEAR')
+
+-------- ------------------------------------------
+
+13/12/20 twenty thirteen
+
+
+
+    'yyyy'
+
+    'month'
+
+    'mon'
+
+    'q' // 4(분기) 
+
+    'mm'
+
+    'd' // 6(요일, 1-일요일)
+
+    'day'
+
+    'dy'
+
+    'ddd'  // 354
+
+    'dd'
+
+    'hh'
+
+    'hh24'
+
+    'miss'
+
+    'am' | 'pm'
+
+
+
+SQL>  select sysdate, to_char(sysdate,'yyyy-mm-dd day am hh:mi:ss') from dual;
+
+
+
+SYSDATE  TO_CHAR(SYSDATE,'YYYY-MM-DDDAYAMHH
+
+-------- ----------------------------------
+
+13/12/20 2013-12-20 금요일 오후 01:17:43
+
+
+
+--현재 세션의 형식 정보
+
+SQL> select * from nls_session_parameters;
+
+
+
+PARAMETER                                               VALUE
+
+------------------------------------------------------- ------------------------------------------
+
+NLS_LANGUAGE                                            KOREAN --***
+
+NLS_TERRITORY                                           KOREA
+
+NLS_CURRENCY                                            ￦
+
+NLS_ISO_CURRENCY                                        KOREA
+
+NLS_NUMERIC_CHARACTERS                                  .,
+
+NLS_CALENDAR                                            GREGORIAN
+
+NLS_DATE_FORMAT                                         RR/MM/DD --***
+
+NLS_DATE_LANGUAGE                                       KOREAN --***
+
+NLS_SORT                                                BINARY
+
+NLS_TIME_FORMAT                                         HH24:MI:SSXFF
+
+NLS_TIMESTAMP_FORMAT                                    RR/MM/DD HH24:MI:SSXFF
+
+
+
+PARAMETER                                               VALUE
+
+------------------------------------------------------- ------------------------------------------
+
+NLS_TIME_TZ_FORMAT                                      HH24:MI:SSXFF TZR
+
+NLS_TIMESTAMP_TZ_FORMAT                                 RR/MM/DD HH24:MI:SSXFF TZR
+
+NLS_DUAL_CURRENCY                                       ￦
+
+NLS_COMP                                                BINARY
+
+NLS_LENGTH_SEMANTICS                                    BYTE
+
+NLS_NCHAR_CONV_EXCP                                     FALSE
+
+
+
+17 개의 행이 선택되었습니다.
+
+
+
+--현재 세션 파리미터 변경(alter session set 파라미터=값;)
+
+SQL> alter session set nls_date_format='yyyy-mm-dd day am hh:mi:ss';
+
+
+
+세션이 변경되었습니다.
+
+
+
+SQL>  select sysdate from dual;
+
+
+
+SYSDATE
+
+----------------------------------
+
+2013-12-20 금요일 오후 01:21:52
+
+
+
+--숫자 관련 형식
+
+--사원명, 급여(세자리마다 ,)를 추출
+
+select saname, to_char(sapay,'fm$9,990') from sawon;
+
+
+
+--다른 날짜와 연산되어 사용되는 변환 함수
+
+SQL> select sysdate + to_yminterval('01-06'), sysdate + to_dsinterval('100 00:00:00') from dual;
+
+
+
+SYSDATE+ SYSDATE+
+
+-------- --------
+
+15/06/20 14/03/30
+
+
+
+5. 날짜 함수
+
+
+
+SQL> select add_months(sysdate,3), last_day(sysdate), next_day(sysdate,'월') from dual;
+
+
+
+ADD_MONT LAST_DAY NEXT_DAY
+
+-------- -------- --------
+
+14/03/20 13/12/31 13/12/23
+
+
+
+SQL> select round(sysdate,'year'), trunc(sysdate,'year') from dual;
+
+
+
+ROUND(SY TRUNC(SY
+
+-------- --------
+
+14/01/01 13/01/01
+
+
+
+-- 두 날짜 사이의 개월수 반환
+
+SQL> select sysdate, months_between(sysdate,'04/12/01') from dual;
+
+
+
+SYSDATE  MONTHS_BETWEEN(SYSDATE,'04/12/01')
+
+-------- ----------------------------------
+
+13/12/20                         108.631443
+
+
+
+--사원명, 입사일, 근무기간(xx년 xx개월)을 추출
+
+select saname, sahire, floor(months_between(sysdate, sahire)/12) || '년 ' ||
+
+                      floor(mod(months_between(sysdate,sahire),12)) ||'개월' "근무기간" from sawon;
+
+
+
+6. 통계함수
+
+-rank() over([partition by 그룹화컬럼] order by 기준컬럼 (asc)|desc) "석차"
+
+
+
+--사원명, 급여, 급여석차를 추출
+
+select deptno, saname, sapay, rank() over(partition by deptno order by sapay desc) "급여석차" from sawon
+
+where sapay is not null;
+
+
+
+                                                     [DB_oracle]오라클교육4일차
+
+[출처] [DB_oracle]오라클교육4일차|작성자 유글

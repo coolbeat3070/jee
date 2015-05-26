@@ -1,0 +1,34 @@
+값 넘기는 방법들
+이벤트 기반
+
+	HTML
+
+		<a href="test.jsp">
+		<form action="test.jsp">
+		     <input type="submit" value="test.jsp">
+		</form>
+
+리턴 값 기반
+
+	JSP : 
+		<%
+			response.sendRedirect("test.jsp");
+		%>
+		<jsp:forward page="test.jsp">
+		     <jsp:param name="key" value="val">
+		</jsp:forward>
+
+
+
+	JS : location.href="test.jsp";
+
+
+
+<jsp:include page="<%=pageFile%>">   </jsp:forward>
+
+<jsp:useBean id="가짜객체명" class="팩키지.클래스이름"/>
+가짜 객체명을 사용할 때는 name 속성으로 연결
+
+<image source="images/bar.gif">
+<img src="images/bar.gif">
+<img src="images/bar.gif" width=900 height=900 alt="">
