@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+@import url(common.css);
+/* 좌측 콘텐츠 */
+article {
+	width: 70%;
+ 	min-height: 50%; 
+	position: relative;
+	z-index: 10;
+	margin: -50px 0 -50px 0;
+	background-color: #FF6;
+	float:left;
+}
+.leftContent {
+	padding-top: 50px;
+}
+/* 우측 사이드 */
+aside{
+	width: 30%;
+	min-height: 50%;
+	position: relative;
+	z-index: 10; 
+	margin: -50px 0 -50px 0; 
+	background-color: RED;
+	float : right;
+}
+.rightSide{
+	padding-top: 50px;
+}

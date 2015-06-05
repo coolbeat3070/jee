@@ -1,0 +1,56 @@
+@charset "utf-8";
+@import url(common.css);
+/* 좌측 사이드 */
+aside {
+	width: 30%;
+	min-height: 50%;
+	position: relative;
+	z-index: 10;
+	margin: -50px 0 -50px 0; 
+	background-color: RED;
+	float : left;
+}
+.leftSide {
+	padding-top: 50px;
+}
+
+
+.snb {
+	float:left;
+	width:20%;
+	height:200px;
+}
+/* 우측 콘텐츠 */
+article {
+	width: 70%;
+ 	min-height: 50%; 
+	position: relative;
+	z-index: 10;
+	margin: -50px 0 -50px 0;
+	background-color: #FF6;
+	float:right;
+}
+.rightContent{
+	padding-top: 50px;
+}
+
+figure {
+ 	float:right; 
+	margin:5px;	
+}
+
+figure img {
+	border:1px solid #666;
+	box-shadow:#CCC 5px 5px 5px;
+}
+
+figcaption {
+	text-align:center;
+}
+
+
+
+hgroup {
+	border-bottom: 1px solid #F90;
+
+}
