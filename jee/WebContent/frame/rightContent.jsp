@@ -32,14 +32,19 @@
 <article> 
     <section class="rightContent"> 
     	<hgroup>
-	        <h2>훈민정음 </h2>
+	        <h2>JEE 모델 2( MVC모델 )</h2>
 	    </hgroup>
-	    <figure> <img src="" width="241" height="160">
-	    	<figcaption> 그림 설명 들어가는 곳</figcaption>
+	    <figure>
+	   		<img src="../images/smallTulips.jpg" width="241" height="160">
+	    	<figcaption> 상대경로로 이미지 호출</figcaption> 
 	    </figure>
-	    <p>나랏님(세종) 말씀이, 우리나라의 말이 중국말과 달라 <mark>한자로는 서로 (의사)소통하지 아니하므로</mark> 이런 까닭에 
-	       어리석은 백성이 이르고자 하는 바가 있어도 마침내 그 뜻을 (글자에) 실어서 펴지 못하는 사람이 많으니라. 내가 이를 불쌍히 
-	        여겨서 새로 스물여덟개의 글자를 만드니 사람마다 쉽게 익혀서 날로 써서 편안하게 할 따름이니라.</p>   
+	   
+	    
+	    <p id="mvcDetail"> MVC 모델은 3 종류로 구분하여 개발합니다. </br>
+	     [1] <mark>Modle</mark> : 순수자바파일 (DB와 연결, 데이터 전송과 연산) <br />
+	     [2] <mark>View</mark> : JSP(HTML) + CSS + 자바스크립트 + XML <br />
+	     [3] <mark>Controller </mark> : 서블릿(View에서 넘어온 데이터를 주고 받는 네트워크에 특화된 java 파일) <br />
+	    </p>   
      </section>
 </article>
 

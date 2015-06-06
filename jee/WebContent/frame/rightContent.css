@@ -3,7 +3,7 @@
 /* 좌측 사이드 */
 aside {
 	width: 30%;
-	min-height: 50%;
+	min-height: 500px;
 	position: relative;
 	z-index: 10;
 	margin: -50px 0 -50px 0; 
@@ -23,11 +23,11 @@ aside {
 /* 우측 콘텐츠 */
 article {
 	width: 70%;
- 	min-height: 50%; 
+ 	min-height: 500px; 
 	position: relative;
 	z-index: 10;
 	margin: -50px 0 -50px 0;
-	background-color: #FF6;
+	background-color: #5ae29e;
 	float:right;
 }
 .rightContent{
@@ -53,4 +53,7 @@ figcaption {
 hgroup {
 	border-bottom: 1px solid #F90;
 
+}
+#mvcDetail{
+	text-align: left;
 }
