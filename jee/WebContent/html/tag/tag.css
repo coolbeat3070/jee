@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+@import url(../../common/common.css);
+.listTag {
+	width : 300px;
+	border : 1px solid black;
+}
+#tableTag{
+	width: 500px;
+	height: 700px;
+}
+#tableTag thead tr th{
+	border: 1px solid gray;
+	height: 50px;
+}
+#tableTag tbody tr td{
+	border: 1px solid gray;
+}
