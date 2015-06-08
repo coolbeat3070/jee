@@ -4,11 +4,11 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<title>Text </title>
+	<title>HTML5 에 추가된 태그 </title>
 </head>
 <body>
 	<section>
-		<p>P 태그 : Hello HTML5</p>
+		
 		<mark>mark 태그 : Hello HTML5</mark>
 		<pre>pre 태그 : Hello HTML5</pre>
 		
