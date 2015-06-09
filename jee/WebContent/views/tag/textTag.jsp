@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<title>HTML5 에 추가된 태그 </title>
+	<title>HTML5 에 추가된 텍스트 태그 </title>
 </head>
 <body>
 	<section>
