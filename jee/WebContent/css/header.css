@@ -1,5 +1,5 @@
 @CHARSET "UTF-8";
-@IMPORT url("../common/common.css");
+@IMPORT url("common.css");
 img{border:none}
 #wrap{
 	width: 99%;

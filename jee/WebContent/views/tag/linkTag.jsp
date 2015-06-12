@@ -16,7 +16,7 @@
 	<p></p> <!-- paragraph 의 약자 .. 단락을 분리시키는 역할 -->
 	<div>
 		<h3>이미지 태그(img)</h3>
-		<img src="../../images/Koala.jpg" alt="" style="width: 200px;"/>
+		<img src="<%=request.getContextPath()%>/images/Koala.jpg" alt="" style="width: 200px;"/>
 		<!-- 이미지는 width 만 주어도 비율을 따져서 축소된다. -->
 	</div>
 </body>
